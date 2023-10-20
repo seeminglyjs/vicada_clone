@@ -211,52 +211,44 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed, // 이 부분 변경
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '홈',
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: SizedBox(
+        width: 60.0, // 원하는 너비 설정
+        height: 60.0, // 원하는 높이 설정
+        child: FloatingActionButton(
+          onPressed: () {},
+          shape: const CircleBorder(),
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.add),
+              Center(
+                child: Text(
+                  "판매하기",
+                  style: TextStyle(fontSize: 12),
+                ),
+              )
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.business,
-              color: Colors.amber,
-            ),
-            label: '찜',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.school,
-              color: Colors.amber,
-            ),
-            label: '판매하기',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.school,
-              color: Colors.amber,
-            ),
-            label: '채팅',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.school,
-              color: Colors.amber,
-            ),
-            label: '마이페이지',
-          ),
-        ],
-        currentIndex: 2,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        ),
       ),
-
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: BottomAppBar(
+          height: 65,
+          shape: const CircularNotchedRectangle(),
+          child: SizedBox(
+            height: 56,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(icon: const Icon(Icons.home), onPressed: () {}),
+                IconButton(icon: const Icon(Icons.search), onPressed: () {}),
+                const SizedBox(width: 40), // The dummy child
+                IconButton(
+                    icon: const Icon(Icons.notifications), onPressed: () {}),
+                IconButton(icon: const Icon(Icons.message), onPressed: () {}),
+              ],
+            ),
+          )),
     );
   }
 }
