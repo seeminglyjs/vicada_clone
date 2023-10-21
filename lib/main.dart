@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vicada_clone/pages/chat_page.dart';
+import 'package:vicada_clone/pages/homd.dart';
 import 'package:vicada_clone/widgets/local_stack_widget.dart';
 import 'package:vicada_clone/widgets/under_line_shadow.dart';
 
@@ -50,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final phoneTotalHeight = MediaQuery.of(context).size.height;
 
     int selectedIndex = 0;
+    final List<Widget> pages = [const Home(), const ChatPage()]; // ChatPage 추가
 
     void _onItemTapped(int index) {
       setState(() {
@@ -90,127 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: UnderLineShadow(),
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(9.0),
-            child: Column(
-              children: [
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "나만의 지역 리스트",
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
-                    ),
-                    Icon(Icons.filter_list_rounded)
-                  ],
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal, // 가로 스크롤을 가능하게 함
-                  child: Row(
-                    children: [
-                      for (var i = 0; i < 10; i++)
-                        const LocalStack(
-                            imgUrl: 'https://picsum.photos/250?image=9',
-                            centerText: "서울"),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const UnderLineShadow(),
-          Expanded(
-            child: ListView.separated(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Stack(
-                      children: <Widget>[
-                        SizedBox(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 12, left: 15),
-                            child: Row(
-                              children: [
-                                Image.network(
-                                  "https://picsum.photos/250?image=9",
-                                  width: 150, // 이미지의 가로 크기를 조절
-                                  height: 150, // 이미지의 세로 크기를 조절
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 8, bottom: 8),
-                                  child: SizedBox(
-                                    width: 200,
-                                    height: 150, // 이미지의 세로 크기를 조절
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "서울숙소1",
-                                              style: TextStyle(fontSize: 17),
-                                            ),
-                                            Icon(
-                                              Icons.favorite_border,
-                                              size: 17,
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "10월 19일 ~ 10월 21일 (2박)",
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.grey),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 12,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              "8,0000원",
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w600),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                );
-              },
-              separatorBuilder: (context, index) {
-                return const UnderLineShadow();
-              },
-            ),
-          )
-        ],
-      ),
+      body: pages[selectedIndex], // 선택된 페이지 표시
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: SizedBox(
         width: 60.0, // 원하는 너비 설정
@@ -233,22 +116,31 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-          height: 65,
-          shape: const CircularNotchedRectangle(),
-          child: SizedBox(
-            height: 56,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                IconButton(icon: const Icon(Icons.home), onPressed: () {}),
-                IconButton(icon: const Icon(Icons.search), onPressed: () {}),
-                const SizedBox(width: 40), // The dummy child
-                IconButton(
-                    icon: const Icon(Icons.notifications), onPressed: () {}),
-                IconButton(icon: const Icon(Icons.message), onPressed: () {}),
-              ],
-            ),
-          )),
+        height: 65,
+        shape: const CircularNotchedRectangle(),
+        child: SizedBox(
+          height: 56,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              IconButton(
+                  icon: const Icon(Icons.home),
+                  onPressed: () {
+                    _onItemTapped(0);
+                  }),
+              IconButton(icon: const Icon(Icons.search), onPressed: () {}),
+              const SizedBox(width: 40), // The dummy child
+              IconButton(
+                  icon: const Icon(Icons.notifications), onPressed: () {}),
+              IconButton(
+                  icon: const Icon(Icons.message),
+                  onPressed: () {
+                    _onItemTapped(1);
+                  }),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
