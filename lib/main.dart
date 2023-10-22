@@ -1,3 +1,4 @@
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:vicada_clone/pages/chat_page.dart';
 import 'package:vicada_clone/pages/homd.dart';
@@ -33,16 +34,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int selectedIndex = 0;
 
-  void _incrementCounter() {
+  void _onItemTapped(int index) {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      selectedIndex = index;
     });
   }
 
@@ -51,14 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final phoneTotalWidth = MediaQuery.of(context).size.width;
     final phoneTotalHeight = MediaQuery.of(context).size.height;
 
-    int selectedIndex = 0;
     final List<Widget> pages = [const Home(), const ChatPage()]; // ChatPage 추가
-
-    void _onItemTapped(int index) {
-      setState(() {
-        selectedIndex = index;
-      });
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -94,52 +83,42 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       body: pages[selectedIndex], // 선택된 페이지 표시
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: SizedBox(
-        width: 60.0, // 원하는 너비 설정
-        height: 60.0, // 원하는 높이 설정
-        child: FloatingActionButton(
-          onPressed: () {},
-          shape: const CircleBorder(),
-          child: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.add),
-              Center(
-                child: Text(
-                  "판매하기",
-                  style: TextStyle(fontSize: 12),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        height: 65,
-        shape: const CircularNotchedRectangle(),
-        child: SizedBox(
-          height: 56,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              IconButton(
-                  icon: const Icon(Icons.home),
-                  onPressed: () {
-                    _onItemTapped(0);
-                  }),
-              IconButton(icon: const Icon(Icons.search), onPressed: () {}),
-              const SizedBox(width: 40), // The dummy child
-              IconButton(
-                  icon: const Icon(Icons.notifications), onPressed: () {}),
-              IconButton(
-                  icon: const Icon(Icons.message),
-                  onPressed: () {
-                    _onItemTapped(1);
-                  }),
-            ],
-          ),
-        ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: SizedBox(
+      //   width: 60.0, // 원하는 너비 설정
+      //   height: 60.0, // 원하는 높이 설정
+      //   child: FloatingActionButton(
+      //     onPressed: () {},
+      //     shape: const CircleBorder(),
+      //     child: const Column(
+      //       mainAxisAlignment: MainAxisAlignment.center,
+      //       children: [
+      //         Icon(Icons.add),
+      //         Center(
+      //           child: Text(
+      //             "판매하기",
+      //             style: TextStyle(fontSize: 12),
+      //           ),
+      //         )
+      //       ],
+      //     ),
+      //   ),
+      // ),
+      bottomNavigationBar: ConvexAppBar(
+        backgroundColor: Colors.deepPurpleAccent.shade100,
+        items: const [
+          TabItem(icon: Icons.home, title: 'Home'),
+          TabItem(icon: Icons.map, title: 'Discovery'),
+          TabItem(icon: Icons.add, title: 'Add'),
+          TabItem(icon: Icons.message, title: 'Message'),
+          TabItem(icon: Icons.people, title: 'Profile'),
+        ],
+        onTap: (int i) {
+          print('click index=$i');
+          // 원하는 동작을 수행하도록 함수를 추가합니다.
+          // 예를 들어, i에 따라 다른 화면으로 이동하거나 특정 작업을 수행할 수 있습니다.
+          _onItemTapped(i);
+        },
       ),
     );
   }
